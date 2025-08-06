@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 
 export class UserService {
   static async createUser(userData: IUser): Promise<IUser> {
+  try {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
@@ -18,8 +19,15 @@ export class UserService {
 
     const newUser = new UserModel(userData);
     await newUser.save();
-    return newUser.toJSON() satisfies IUser;
+
+       const { password, ...userWithoutPassword } = newUser.toObject();
+    return userWithoutPassword as IUser;
+  } catch (error) {
+    throw error;
   }
+}
+
+
 
   async getUserBiId(id: string): Promise<IUser | null> {
     try {
