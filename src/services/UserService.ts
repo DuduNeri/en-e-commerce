@@ -3,7 +3,7 @@ import UserModel from '../models/UserModel';
 import bcrypt from 'bcryptjs';
 
 export class UserService {
-  static async createUser(userData: IUser): Promise<IUserResponse> {
+  async createUser(userData: IUser): Promise<IUserResponse> {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
