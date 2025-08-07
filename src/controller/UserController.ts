@@ -1,24 +1,26 @@
 import { UserService } from "../services/UserService";
 import { IUser } from "../types/UserTypes";
 
+const userService = new UserService();
+
 export class UserController {
   async create(data: IUser) {
-    return await UserService.createUser(data);
+    return userService.createUser(data);
   }
 
   async getUsers(data: { id: string }) {
-    return await new UserService().getUserBiId(data.id);
+    return userService.getUserBiId(data.id);
   }
 
   async getAll() {
-    return await new UserService().getAllUsers();
+    return userService.getAllUsers();
   }
 
   async update(id: string, userData: IUser) {
-    return await new UserService().updateUser(id, userData);
+    return userService.updateUser(id, userData);
   }
 
   async delete(id: string) {
-    return await new UserService().deleteUser(id);
+    return userService.deleteUser(id);
   }
 }
