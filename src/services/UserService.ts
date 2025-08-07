@@ -1,34 +1,32 @@
-import { IUser } from '../types/types';
+import { IUser, IUserResponse } from '../types/UserTypes';
 import UserModel from '../models/UserModel'
 import bcrypt from 'bcryptjs';
 
 export class UserService {
-  static async createUser(userData: IUser): Promise<IUser> {
-  try {
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    userData.password = hashedPassword;
+  static async createUser(userData: IUser): Promise<IUserResponse> {
+    try {
+      const hashedPassword = await bcrypt.hash(userData.password, 10);
+      userData.password = hashedPassword;
 
-    const existingUserEmail = await UserModel.findOne({ email: userData.email });
-    if (existingUserEmail) {
-      throw new Error("Email already exists");
+      const existingUserEmail = await UserModel.findOne({ email: userData.email });
+      if (existingUserEmail) {
+        throw new Error("Email already exists");
+      }
+
+      if (!userData.name || !userData.email || !userData.password) {
+        throw new Error("Name, email, and password are required");
+      }
+
+      const newUser = new UserModel(userData);
+      await newUser.save();
+
+      const { password, ...userWithoutPassword } = newUser.toObject();
+      return userWithoutPassword;
+    } catch (error) {
+      throw error;
     }
-
-    if (!userData.name || !userData.email || !userData.password) {
-      throw new Error("Name, email, and password are required");
-    }
-
-    const newUser = new UserModel(userData);
-    await newUser.save();
-
-       const { password, ...userWithoutPassword } = newUser.toObject();
-    return userWithoutPassword as IUser;
-  } catch (error) {
-    throw error;
   }
-}
-
-
-
+  
   async getUserBiId(id: string): Promise<IUser | null> {
     try {
       const getUser = await UserModel.findById(id);

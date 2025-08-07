@@ -1,5 +1,5 @@
 import { UserService } from "../services/UserService";
-import { IUser } from "../types/types";
+import { IUser } from "../types/UserTypes";
 
 export class UserController {
   async create(data: IUser) {

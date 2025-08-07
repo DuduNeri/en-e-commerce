@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IUser } from "../types/types";
+import { IUser } from "../types/UserTypes";
 
 const User = await new mongoose.Schema<IUser>({
   name: { type: String, required: true },
