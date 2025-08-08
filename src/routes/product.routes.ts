@@ -1,17 +1,21 @@
 import { Router, Request, Response } from "express";
-import { ProductController } from "../controller/ProductController";
+import { ProductController } from "../controller/product.controller";
+import { authMiddleware, AuthRequest } from "../middlewares/auth.user";
 
 const productRouter = Router();
 
-productRouter.post("/", async (req: Request, res: Response) => {
+productRouter.post("/", authMiddleware, async (req: AuthRequest, res: Response) => {
   try {
-    const newProduct = await new ProductController().create(req.body);
+    const productData = { ...req.body, userId: req.user!.id };
+    const newProduct = await new ProductController().create(productData);
+
     res.status(201).json(newProduct);
   } catch (error) {
     console.error("Error creating product ❌ :", error);
     res.status(500).json({ message: "Internal server error ❌" });
   }
-})
+});
+
 
 productRouter.get("/:id", async (req: Request, res: Response) => {
   try {

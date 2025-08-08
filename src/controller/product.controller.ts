@@ -1,5 +1,5 @@
-import { ProductService } from "../services/ProductService";
-import type { IProduct } from "../types/ProductTypes";
+import { ProductService } from "../services/product.service";
+import type { IProduct } from "../interfaces/product.interface";
 
 const productService = new ProductService();
 

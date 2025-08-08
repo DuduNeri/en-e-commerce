@@ -1,10 +1,11 @@
+import { Types } from "mongoose";
+
 export interface IProduct {
-  _id?: string;
   name: string;
   title: string;
   description: string;
   price: number;
-  createdAt: Date;
-  updatedAt: Date;
+  owner: Types.ObjectId; 
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-

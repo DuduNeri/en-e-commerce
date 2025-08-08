@@ -1,5 +1,5 @@
-import ProductsModel from '../models/ProductsModel';
-import { IProduct } from './../types/ProductTypes';
+import ProductsModel from '../models/product.model';
+import { IProduct } from '../interfaces/product.interface';
 
 export class ProductService {
   async createProduct(data: IProduct): Promise<IProduct> {

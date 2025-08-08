@@ -1,5 +1,5 @@
-import { IUser, IUserResponse } from '../types/UserTypes';
-import UserModel from '../models/UserModel';
+import { IUser, IUserResponse } from '../interfaces/user.interface';
+import UserModel from '../models/user.model';
 import bcrypt from 'bcryptjs';
 
 export class UserService {

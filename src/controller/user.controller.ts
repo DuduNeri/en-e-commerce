@@ -1,5 +1,5 @@
-import { UserService } from "../services/UserService";
-import { IUser } from "../types/UserTypes";
+import { UserService } from "../services/user.service";
+import { IUser } from "../interfaces/user.interface";
 
 const userService = new UserService();
 
