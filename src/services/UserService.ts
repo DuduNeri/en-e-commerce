@@ -24,7 +24,7 @@ export class UserService {
   }
 
   async getUserBiId(id: string): Promise<IUser> {
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id).select('-password');
     if (!user) {
       throw new Error("User not found");
     }
@@ -32,10 +32,11 @@ export class UserService {
   }
 
   async getAllUsers(): Promise<IUser[]> {
-    const users = await UserModel.find();
+    const users = await UserModel.find().select('-password');
     if (!users || users.length === 0) {
       throw new Error("No users found");
     }
+    
     return users;
   }
 

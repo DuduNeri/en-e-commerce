@@ -8,8 +8,8 @@ productRouter.post("/", async (req: Request, res: Response) => {
     const newProduct = await new ProductController().create(req.body);
     res.status(201).json(newProduct);
   } catch (error) {
-    console.error("Error creating product:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error creating product ❌ :", error);
+    res.status(500).json({ message: "Internal server error ❌" });
   }
 })
 
@@ -18,8 +18,8 @@ productRouter.get("/:id", async (req: Request, res: Response) => {
     const product = await new ProductController().getProductById(req.params.id);
     res.status(200).json(product);
   } catch (error) {
-    console.error("Error fetching product:", error);
-    res.status(404).json({ message: "Product not found" });
+    console.error("❌ Error fetching product:", error);
+    res.status(404).json({ message: "❌ Product not found" });
   }
 })
 
@@ -28,8 +28,8 @@ productRouter.get("/", async (req: Request, res: Response) => {
     const products = await new ProductController().getAll();
     res.status(200).json(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Could not fetch products" });
+    console.error("❌ Error fetching products:", error);
+    res.status(500).json({ message: "❌ Could not fetch products" });
   }
 })
 
@@ -37,12 +37,12 @@ productRouter.put("/:id", async (req: Request, res: Response) => {
   try {
     const updatedProduct = await new ProductController().update(req.params.id, req.body);
     if (!updatedProduct) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: "❌ Product not found" });
     }
     res.status(200).json(updatedProduct);
   } catch (error) {
     console.error("Error updating product:", error);
-    res.status(500).json({ message: "Could not update product" });
+    res.status(500).json({ message: "❌ Could not update product" });
   }
 })
 
@@ -51,8 +51,8 @@ productRouter.delete("/:id", async (req: Request, res: Response) => {
     await new ProductController().delete(req.params.id);
     return res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
-    console.error("Error deleting product:", error);
-    res.status(404).json({ message: "Product not found" });
+    console.error("❌ Error deleting product:", error);
+    res.status(404).json({ message: "❌ Product not found" });
   }
 })
 
