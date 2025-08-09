@@ -3,24 +3,27 @@ import UserModel from '../models/user.model';
 import bcrypt from 'bcryptjs';
 
 export class UserService {
-  async createUser(userData: IUser): Promise<IUserResponse> {
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    userData.password = hashedPassword;
-
-    const existingUserEmail = await UserModel.findOne({ email: userData.email });
-    if (existingUserEmail) {
-      throw new Error("Email already exists");
-    }
-
+    async createUser(userData: IUser): Promise<IUserResponse> {
     if (!userData.name || !userData.email || !userData.password) {
       throw new Error("Name, email, and password are required");
     }
 
-    const newUser = new UserModel(userData);
+    const existingUser = await UserModel.findOne({ email: userData.email });
+    if (existingUser) {
+      throw new Error("Email already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
+    const newUser = new UserModel({
+      ...userData,
+      password: hashedPassword
+    });
+
     await newUser.save();
 
     const { password, ...userWithoutPassword } = newUser.toObject();
-    return userWithoutPassword;
+    return userWithoutPassword as IUserResponse;
   }
 
   async getUserBiId(id: string): Promise<IUser> {

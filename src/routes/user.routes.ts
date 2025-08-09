@@ -3,15 +3,14 @@ import { Router, Request, Response } from "express";
 
 const userRouter = Router();
 
-userRouter.post("/", async (req: Request, res: Response) => {
-   try {
+userRouter.post("/", async (req, res) => {
+  try {
     const newUser = await new UserController().create(req.body);
     res.status(201).json(newUser);
-   } catch (error) {
-    console.error("Error creating user:", error);
+  } catch (error) {
     res.status(500).json({ message: "Internal server error" });
-   }
-})
+  }
+});
 
 userRouter.get("/:id", async (req: Request, res: Response) => {
     try {

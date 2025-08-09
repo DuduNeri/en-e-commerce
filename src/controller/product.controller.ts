@@ -16,6 +16,10 @@ export class ProductController {
     return productService.getAllProducts();
   }
 
+  async getProductsByUser(userId: string) {
+    return productService.getProductsByUser(userId);
+  }
+
   async update(id: string, data: IProduct) {
     return productService.updateProduct(id, data);
   }
@@ -24,4 +28,3 @@ export class ProductController {
     return productService.deleteProduct(id);
   }
 }
-

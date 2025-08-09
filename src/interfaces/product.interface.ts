@@ -8,4 +8,5 @@ export interface IProduct {
   owner: Types.ObjectId; 
   createdAt?: Date;
   updatedAt?: Date;
+  user: Types.ObjectId;
 }

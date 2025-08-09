@@ -21,4 +21,9 @@ export class AuthService {
       user: { id: user._id, name: user.name, email: user.email },
     };
   }
+  async ProductByUser(userId: string) {
+    const products = await UserModel.findById(userId).populate("products");
+    if (!products) throw new Error("Produtos não encontrados para este usuário");
+    return products;
+  }
 }
