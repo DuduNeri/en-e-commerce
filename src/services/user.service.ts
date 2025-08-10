@@ -5,12 +5,12 @@ import bcrypt from 'bcryptjs';
 export class UserService {
     async createUser(userData: IUser): Promise<IUserResponse> {
     if (!userData.name || !userData.email || !userData.password) {
-      throw new Error("Name, email, and password are required");
+      throw new Error("Nome, email, e senha são obrigatórios");
     }
 
     const existingUser = await UserModel.findOne({ email: userData.email });
     if (existingUser) {
-      throw new Error("Email already exists");
+      throw new Error("Email já está em uso");
     }
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -29,7 +29,7 @@ export class UserService {
   async getUserBiId(id: string): Promise<IUser> {
     const user = await UserModel.findById(id).select('-password');
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("Usuario não encontrado");
     }
     return user;
   }
@@ -37,7 +37,7 @@ export class UserService {
   async getAllUsers(): Promise<IUser[]> {
     const users = await UserModel.find().select('-password');
     if (!users || users.length === 0) {
-      throw new Error("No users found");
+      throw new Error("Nenhum usuário encontrado");
     }
     
     return users;
@@ -48,7 +48,7 @@ export class UserService {
       new: true,
     });
     if (!updatedUser) {
-      throw new Error("User not found");
+      throw new Error("Usuário não encontrado");
     }
     return updatedUser;
   }
@@ -56,7 +56,7 @@ export class UserService {
   async deleteUser(id: string): Promise<void> {
     const deletedUser = await UserModel.findByIdAndDelete(id);
     if (!deletedUser) {
-      throw new Error("User not found");
+      throw new Error("Usuário não encontrado");
     }
   }
 }
