@@ -1,5 +1,5 @@
 import { Response, NextFunction, RequestHandler } from "express";
-import { AuthRequest } from "../middlewares/auth.user";
+import { AuthRequest } from "../types/auth.request";
 import Product from "../models/product.model";
 
 export class CheckProductOwner {

@@ -1,7 +1,8 @@
 import { Router, Request, Response } from "express";
-import { ProductController } from "../controller/product.controller";
-import { authMiddleware, AuthRequest } from "../middlewares/auth.user";
+import { ProductController } from "../controllers/product.controller";
+import { authMiddleware} from "../middlewares/auth.user";
 import { CheckProductOwner } from "../middlewares/check.product.owner";
+import { AuthRequest } from "../types/auth.request";
 import { isAdmin } from "../middlewares/its.admin";
 
 const productRouter = Router();
