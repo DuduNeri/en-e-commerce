@@ -1,5 +1,5 @@
 import { Response, NextFunction, RequestHandler } from "express";
-import { AuthRequest } from "../types/auth.request";
+import { AuthRequest } from "../interfaces/auth.interface";
 import Product from "../models/product.model";
 
 export class CheckProductOwner {

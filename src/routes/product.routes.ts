@@ -2,13 +2,14 @@ import { Router, Request, Response } from "express";
 import { ProductController } from "../controllers/product.controller";
 import { authMiddleware} from "../middlewares/auth.user";
 import { CheckProductOwner } from "../middlewares/check.product.owner";
-import { AuthRequest } from "../types/auth.request";
+import { AuthRequest } from "../interfaces/auth.interface";
 import { isAdmin } from "../middlewares/its.admin";
+import { validate } from "../middlewares/validation";
 
 const productRouter = Router();
 const productController = new ProductController();
 
-productRouter.post("/", authMiddleware, isAdmin, async (req: AuthRequest, res: Response) => {
+productRouter.post("/", authMiddleware, validate , async (req: AuthRequest, res: Response) => {
   try {
     const productData = { ...req.body, user: req.user!.id }; 
     const newProduct = await productController.create(productData);
