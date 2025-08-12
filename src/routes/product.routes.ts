@@ -7,7 +7,7 @@ import { isAdmin } from "../middlewares/its.admin";
 const productRouter = Router();
 const productController = new ProductController();
 
-productRouter.post("/", authMiddleware, async (req: AuthRequest, res: Response) => {
+productRouter.post("/", authMiddleware, isAdmin, async (req: AuthRequest, res: Response) => {
   try {
     const productData = { ...req.body, user: req.user!.id }; 
     const newProduct = await productController.create(productData);
@@ -61,7 +61,7 @@ productRouter.put("/:id", authMiddleware, CheckProductOwner.checkOwner, async (r
   }
 });
 
-productRouter.delete("/:id", authMiddleware, CheckProductOwner.checkOwner, async (req: AuthRequest, res: Response) => {
+productRouter.delete("/:id", authMiddleware, isAdmin, CheckProductOwner.checkOwner, async (req: AuthRequest, res: Response) => {
   try {
     await productController.delete(req.params.id);
     res.status(200).json({ message: "Product deleted successfully" });
