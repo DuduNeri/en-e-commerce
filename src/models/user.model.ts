@@ -7,6 +7,7 @@ const UserSchema = new Schema<IUser>({
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  role: { type: String, enum: ["user", "admin"], default: "user", required: true },
 });
 
 export default mongoose.model<IUser>("User", UserSchema);

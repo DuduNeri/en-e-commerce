@@ -4,8 +4,9 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  createdAt: Date;
-  updatedAt: Date;
+  role: "user" | "admin";
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type IUserResponse = Omit<IUser, "password">;

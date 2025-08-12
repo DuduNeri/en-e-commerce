@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { ProductController } from "../controller/product.controller";
 import { authMiddleware, AuthRequest } from "../middlewares/auth.user";
 import { CheckProductOwner } from "../middlewares/check.product.owner";
+import { isAdmin } from "../middlewares/its.admin";
 
 const productRouter = Router();
 const productController = new ProductController();
