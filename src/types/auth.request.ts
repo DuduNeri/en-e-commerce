@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-interface JwtPayload {
+ interface JwtPayload {
   id: string;
   email: string;
   role: string;
