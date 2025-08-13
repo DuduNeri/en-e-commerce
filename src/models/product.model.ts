@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import { IProduct } from "../interfaces/product.interface";
 
 const ProductSchema = new Schema<IProduct>(
@@ -8,17 +8,11 @@ const ProductSchema = new Schema<IProduct>(
     description: { type: String, required: true },
     price: { type: Number, required: true },
 
-    user: { 
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true
-    },
-
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   {
-    timestamps: true,
+    timestamps: true, 
   }
 );
 

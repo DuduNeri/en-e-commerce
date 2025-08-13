@@ -1,6 +1,7 @@
 import joi from 'joi';
 
 export const productValidation = joi.object({
+  
   name: joi.string().required().messages({
     "string.base": "O nome deve ser um texto",
     "string.empty": "O nome é obrigatório",

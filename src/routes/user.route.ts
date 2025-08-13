@@ -8,6 +8,7 @@ userRouter.post("/", async (req, res) => {
     const newUser = await new UserController().create(req.body);
     res.status(201).json(newUser);
   } catch (error) {
+    console.error("Error creating user:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

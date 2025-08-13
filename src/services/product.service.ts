@@ -3,7 +3,8 @@ import type { IProduct } from "../interfaces/product.interface";
 
 export class ProductService {
   async createProduct(data: IProduct) {
-    return ProductModel.create(data);
+      const product = await ProductModel.create(data);
+      return product;
   }
 
   async getProductById(id: string) {

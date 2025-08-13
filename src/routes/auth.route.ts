@@ -11,7 +11,7 @@ router.post("/login", async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Email e senha são obrigatórios" });
 
     const data = await authController.login(email, password);
-    res.json(data);
+    return res.json(data);
   } catch (error: any) {
     res.status(401).json({ message: error.message });
   }

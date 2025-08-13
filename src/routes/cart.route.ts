@@ -32,7 +32,7 @@ cartRoute.delete("/:productId", authMiddleware, async (req: Request & { user?: a
 
 cartRoute.get("/", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user.id.params;
     const cart = await new CartController().getCartByUserId(userId);
     res.status(200).json(cart);
   } catch (error) {

@@ -1,6 +1,6 @@
-import {Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import {AuthRequest} from "../interfaces/auth.interface";
+import { AuthRequest, JwtPayload } from "../interfaces/auth.interface";
 
 export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
@@ -10,8 +10,15 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret") as AuthRequest["user"];
-    req.user = decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret") as JwtPayload;
+    if (!decoded || !decoded.id || !decoded.email) {
+      return res.status(401).json({ message: "Token inválido" });
+    }
+    req.user = {
+      id: decoded.id,
+      email: decoded.email,
+      role: decoded.role || "user"
+    };
     next();
   } catch {
     return res.status(401).json({ message: "Token inválido ou expirado" });
