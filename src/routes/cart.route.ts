@@ -18,5 +18,52 @@ cartRoute.post("/", authMiddleware, async (req: Request & { user?: any }, res: R
   }
 });
 
+cartRoute.delete("/:productId", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
+   try {
+    const userId = req.user.id;
+    const productId = req.params.productId;
+    const cartItem = await new CartController().removeItemFromCart(userId, productId);
+    res.status(200).json(cartItem);
+   } catch (error) {
+    console.error("Erro ao remover item do carrinho:", error);
+    res.status(500).json({ message: "Não foi possível remover o item do carrinho." });
+   }
+})
+
+cartRoute.get("/", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
+  try {
+    const userId = req.user.id;
+    const cart = await new CartController().getCartByUserId(userId);
+    res.status(200).json(cart);
+  } catch (error) {
+    console.error("Erro ao obter carrinho:", error);
+    res.status(500).json({ message: "Não foi possível obter o carrinho." });
+  }
+});
+
+cartRoute.delete("/", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
+  try {
+    const userId = req.user.id;
+    const cart = await new CartController().clearCart(userId);
+    res.status(200).json(cart);
+  } catch (error) {
+    console.error("Erro ao limpar carrinho:", error);
+    res.status(500).json({ message: "Não foi possível limpar o carrinho." });
+  }
+});
+
+cartRoute.put("/:productId", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
+  try {
+    const userId = req.user.id;
+    const productId = req.params.productId;
+    const { quantity } = req.body;
+
+    const updatedCart = await new CartController().updateCartItem(userId, productId, quantity);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    console.error("Erro ao atualizar item do carrinho:", error);
+    res.status(500).json({ message: "Não foi possível atualizar o item do carrinho." });
+  }
+});
 
 export default cartRoute;
