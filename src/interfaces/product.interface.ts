@@ -5,6 +5,8 @@ export interface IProduct {
   title: string;
   description: string;
   price: number;
+  category: string;
+  stock: number;
   owner: Types.ObjectId; 
   createdAt?: Date;
   updatedAt?: Date;

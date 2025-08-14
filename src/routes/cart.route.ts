@@ -1,33 +1,43 @@
 import { CartController } from "../controllers/cart.controller";
 import { Router, Request, Response } from "express";
 import { authMiddleware } from "../middlewares/auth.user";
+import productModel from "../models/product.model";
 
 const cartRoute = Router();
 
 cartRoute.post("/", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
   try {
-    const userId = req.user.id; 
+    const userId = req.user!.id;
     const { productId, quantity } = req.body;
 
+    if (!productId || !quantity) {
+      return res.status(400).json({ success: false, message: "productId e quantity são obrigatórios." });
+    }
+
+    // Aqui o service vai lançar erro se não houver estoque suficiente
     const cartItem = await new CartController().addToCart(userId, productId, quantity);
 
-    res.status(201).json(cartItem);
-  } catch (error) {
-    console.error("Erro ao adicionar item ao carrinho:", error);
-    res.status(500).json({ message: "Não foi possível adicionar o item ao carrinho." });
+    return res.status(201).json({ success: true, cart: cartItem });
+
+  } catch (error: any) {
+    console.error("❌ Erro ao adicionar item ao carrinho:", error);
+
+    // Retorna a mensagem do erro lançado pelo service
+    return res.status(400).json({ success: false, message: error.message });
   }
 });
 
+
 cartRoute.delete("/:productId", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
-   try {
+  try {
     const userId = req.user.id;
     const productId = req.params.productId;
     const cartItem = await new CartController().removeItemFromCart(userId, productId);
     res.status(200).json(cartItem);
-   } catch (error) {
+  } catch (error) {
     console.error("Erro ao remover item do carrinho:", error);
     res.status(500).json({ message: "Não foi possível remover o item do carrinho." });
-   }
+  }
 })
 
 cartRoute.get("/", authMiddleware, async (req: Request & { user?: any }, res: Response) => {

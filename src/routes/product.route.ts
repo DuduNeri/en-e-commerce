@@ -10,8 +10,8 @@ const productController = new ProductController();
 productRouter.post("/", authMiddleware, async (req: AuthRequest, res: Response) => {
   try {
 
-    if (!req.body.name || !req.body.price) {
-      return res.status(400).json({ message: "Name and price are required" });
+    if (!req.body.name || !req.body.price || !req.body.category || !req.body.stock || !req.body.description || !req.body.title) {
+      return res.status(400).json({ message: "Todos os campos são obrigatórios" });
     }
 
     const productData = {

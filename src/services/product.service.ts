@@ -4,6 +4,15 @@ import type { IProduct } from "../interfaces/product.interface";
 export class ProductService {
   async createProduct(data: IProduct) {
       const product = await ProductModel.create(data);
+      if (!product) {
+        throw new Error("Failed to create product");
+      }
+      const productStock = await ProductModel.findById(product._id);
+      if (!productStock) {
+        throw new Error("Product not found after creation");
+      }
+      productStock.stock = data.stock; 
+      await productStock.save();
       return product;
   }
 
