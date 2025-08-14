@@ -4,14 +4,15 @@ import productModel from "../models/product.model";
 export class CartService {
   async addToCart(userId: string, productId: string, quantity: number) {
     const product = await productModel.findById(productId);
-    if (!product) throw new Error("Produto não encontrado");
-
-    if (quantity <= 0) throw new Error("A quantidade deve ser maior que zero");
-
-    if (quantity > product.stock) throw new Error("Quantidade solicitada excede o estoque disponível");
+    if (!product) 
+      throw new Error("Produto não encontrado");
+    if (quantity <= 0) 
+      throw new Error("A quantidade deve ser maior que zero");
+    if (quantity > product.stock) 
+      throw new Error("Quantidade solicitada excede o estoque disponível");
 
     let cart = await cartModel.findOne({ user: userId });
-
+    
     if (cart) {
       const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
 
