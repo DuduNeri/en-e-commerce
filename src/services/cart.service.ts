@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 
 export class CartService {
-    async getCartByUserId(userId: string) {
+  async getCartByUserId(userId: string) {
     const cart = await cartModel
       .findOne({ user: new mongoose.Types.ObjectId(userId) })
       .populate("items.product");
@@ -12,18 +12,18 @@ export class CartService {
       throw new Error("Carrinho não encontrado para este usuário");
     }
     return cart;
-}
+  }
   async addToCart(userId: string, productId: string, quantity: number) {
     const product = await productModel.findById(productId);
-    if (!product) 
+    if (!product)
       throw new Error("Produto não encontrado");
-    if (quantity <= 0) 
+    if (quantity <= 0)
       throw new Error("A quantidade deve ser maior que zero");
-    if (quantity > product.stock) 
+    if (quantity > product.stock)
       throw new Error("Quantidade solicitada excede o estoque disponível");
 
     let cart = await cartModel.findOne({ user: userId });
-    
+
     if (cart) {
       const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
 
