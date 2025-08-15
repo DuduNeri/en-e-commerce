@@ -1,7 +1,18 @@
 import cartModel from "../models/cart.model";
 import productModel from "../models/product.model";
+import mongoose from "mongoose";
+
 
 export class CartService {
+    async getCartByUserId(userId: string) {
+    const cart = await cartModel
+      .findOne({ user: new mongoose.Types.ObjectId(userId) })
+      .populate("items.product");
+    if (!cart) {
+      throw new Error("Carrinho não encontrado para este usuário");
+    }
+    return cart;
+}
   async addToCart(userId: string, productId: string, quantity: number) {
     const product = await productModel.findById(productId);
     if (!product) 

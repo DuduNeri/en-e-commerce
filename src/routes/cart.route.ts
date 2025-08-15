@@ -1,7 +1,6 @@
 import { CartController } from "../controllers/cart.controller";
 import { Router, Request, Response } from "express";
 import { authMiddleware } from "../middlewares/auth.user";
-import productModel from "../models/product.model";
 
 const cartRoute = Router();
 
@@ -14,7 +13,6 @@ cartRoute.post("/", authMiddleware, async (req: Request & { user?: any }, res: R
       return res.status(400).json({ success: false, message: "productId e quantity são obrigatórios." });
     }
 
-    // Aqui o service vai lançar erro se não houver estoque suficiente
     const cartItem = await new CartController().addToCart(userId, productId, quantity);
 
     return res.status(201).json({ success: true, cart: cartItem });
@@ -22,7 +20,6 @@ cartRoute.post("/", authMiddleware, async (req: Request & { user?: any }, res: R
   } catch (error: any) {
     console.error("❌ Erro ao adicionar item ao carrinho:", error);
 
-    // Retorna a mensagem do erro lançado pelo service
     return res.status(400).json({ success: false, message: error.message });
   }
 });
@@ -40,9 +37,10 @@ cartRoute.delete("/:productId", authMiddleware, async (req: Request & { user?: a
   }
 })
 
-cartRoute.get("/", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
+cartRoute.get("/user/:id", authMiddleware, async (req: Request & { user?: any }, res: Response) => {
   try {
-    const userId = req.user.id.params;
+    
+    const userId = req.user.id;
     const cart = await new CartController().getCartByUserId(userId);
     res.status(200).json(cart);
   } catch (error) {
