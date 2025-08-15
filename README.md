@@ -78,24 +78,9 @@ A API utiliza **JWT**.
 Para acessar rotas protegidas, envie o token no header:
 Authorization: Bearer <seu_token>
 
-yaml
-Copiar
-Editar
 
 ---
 
-## 📂 Estrutura de Pastas
-src/
-├── controllers/ # Regras de entrada e saída das requisições
-├── services/ # Lógica de negócios
-├── models/ # Schemas Mongoose
-├── interfaces/ # Tipagens TypeScript
-├── middlewares/ # Autenticação e validações
-├── routes/ # Definição de rotas
-
-yaml
-Copiar
-Editar
 
 ---
 
