@@ -53,10 +53,10 @@ Permite cadastro e gerenciamento de usuários e produtos, com autenticação via
 | Funcionalidade                       | Status |
 |--------------------------------------|--------|
 | Cadastro de produtos                 | ✅ Implementado |
-| Carrinho de compras                  | ❌ Não implementado |
-| Pedidos e itens do pedido            | ❌ Não implementado |
+| Carrinho de compras                  | ✅ Implementado |
+| Pedidos e itens do pedido            | ✅ Implementado |
 | Relacionamento Usuário ↔ Produto     | ✅ Implementado |
-| Relacionamento Pedido ↔ Itens        | ❌ Não implementado |
+| Relacionamento Pedido ↔ Itens        | ✅ Implementado |
 | Upload de imagem de produto          | ❌ Não implementado |
 | Pagamento (Stripe / MercadoPago)     | ❌ Não implementado |
 | Controle de permissões por papel     | ⚠ Parcial (somente dono do recurso) |
