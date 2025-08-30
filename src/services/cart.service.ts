@@ -13,6 +13,7 @@ export class CartService {
     }
     return cart;
   }
+  
   async addToCart(userId: string, productId: string, quantity: number) {
     const product = await productModel.findById(productId);
     if (!product)

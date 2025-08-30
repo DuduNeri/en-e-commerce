@@ -3,21 +3,15 @@ import type { IProduct } from "../interfaces/product.interface";
 
 export class ProductService {
   async createProduct(data: IProduct) {
-      const product = await ProductModel.create(data);
-      if (!product) {
-        throw new Error("Failed to create product");
-      }
-      const productStock = await ProductModel.findById(product._id);
-      if (!productStock) {
-        throw new Error("Product not found after creation");
-      }
-      productStock.stock = data.stock; 
-      await productStock.save();
-      return product;
+    const product = await ProductModel.create(data);
+    if (!product) throw new Error("Failed to create product");
+    return product;
   }
 
   async getProductById(id: string) {
-    return ProductModel.findById(id).populate("user", "name email");
+    const product = await ProductModel.findById(id).populate("user", "name email");
+    if (!product) throw new Error("Product not found");
+    return product;
   }
 
   async getAllProducts() {
@@ -29,10 +23,14 @@ export class ProductService {
   }
 
   async updateProduct(id: string, data: IProduct) {
-    return ProductModel.findByIdAndUpdate(id, data, { new: true });
+    const updated = await ProductModel.findByIdAndUpdate(id, data, { new: true });
+    if (!updated) throw new Error("Product not found for update");
+    return updated;
   }
 
   async deleteProduct(id: string) {
-    return ProductModel.findByIdAndDelete(id);
+    const deleted = await ProductModel.findByIdAndDelete(id);
+    if (!deleted) throw new Error("Product not found for delete");
+    return deleted;
   }
 }
