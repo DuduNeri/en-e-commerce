@@ -64,10 +64,6 @@ Permite cadastro e gerenciamento de usuários e produtos, com autenticação via
 ---
 
 ## 📅 Funcionalidades Futuras
-- [ ] Criar carrinho de compras vinculado ao usuário
-- [ ] Criar sistema de pedidos e itens do pedido
-- [ ] Adicionar upload de imagem de produto (Multer + Cloudinary)
-- [ ] Implementar roles de usuário (`admin`, `user`)
 - [ ] Integrar Stripe ou MercadoPago para checkout
 - [ ] Adicionar paginação e filtros avançados para produtos
 
